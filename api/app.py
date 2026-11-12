@@ -1,6 +1,8 @@
+import html
 import importlib
 import os
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
 MODEL_IMPL = os.getenv("MODEL_IMPL", "rule")
@@ -17,7 +19,35 @@ class EtaResponse(BaseModel):
     minutes: float
     model: str  # 어떤 구현체가 낸 예측인지 (장애 추적용)
 
-app = FastAPI(title="delivery-eta")
+APP_VERSION = "v0.2"
+
+app = FastAPI(title="delivery-eta", version=APP_VERSION)
+
+@app.get("/", response_class=HTMLResponse)
+def index() -> str:
+    """API 소개 페이지를 HTML로 돌려준다."""
+    model = html.escape(MODEL_IMPL)
+    return f"""<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>delivery-eta API</title>
+</head>
+<body style="font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; line-height: 1.6;">
+  <h1>🛵 delivery-eta API</h1>
+  <p>거리와 밀린 주문 수로 배달 예상 시간(분)을 계산하는 API입니다.</p>
+  <p>버전: <b>{APP_VERSION}</b> · 모델: <b>{model}</b></p>
+  <h2>엔드포인트</h2>
+  <ul>
+    <li><code>GET /health</code> — 서비스 상태와 현재 모델</li>
+    <li><code>POST /eta</code> — 배달 예상 시간 계산<br>
+      요청 예: <code>{{"distance_km": 2, "pending_orders": 3}}</code><br>
+      응답 예: <code>{{"minutes": 22.0, "model": "{model}"}}</code></li>
+    <li><a href="/docs">/docs</a> — Swagger 문서에서 직접 호출해 보기</li>
+  </ul>
+</body>
+</html>"""
 
 @app.get("/health")
 def health() -> dict[str, str]:

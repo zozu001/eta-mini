@@ -242,3 +242,14 @@ def test_health_post_method_not_allowed():
 def test_unknown_path_returns_404():
     """정의되지 않은 경로는 404 를 돌려준다."""
     assert client.get("/nope").status_code == 404
+
+
+# ---------- / 소개 페이지 ----------
+
+def test_index_returns_html_intro():
+    """/ 는 200 과 API 이름·버전·엔드포인트를 담은 HTML 을 돌려준다."""
+    res = client.get("/")
+    assert res.status_code == 200
+    assert res.headers["content-type"].startswith("text/html")
+    for text in ("delivery-eta", "v0.2", "/health", "/eta", "/docs"):
+        assert text in res.text
