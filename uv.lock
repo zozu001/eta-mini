@@ -267,12 +267,10 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
-    { name = "joblib" },
     { name = "numpy" },
     { name = "onnx" },
     { name = "onnxruntime" },
     { name = "runtime" },
-    { name = "scikit-learn" },
     { name = "uvicorn" },
 ]
 
@@ -282,8 +280,10 @@ dev = [
     { name = "pytest" },
 ]
 train = [
+    { name = "joblib" },
     { name = "onnx" },
     { name = "onnxscript" },
+    { name = "scikit-learn" },
     { name = "skl2onnx" },
     { name = "torch", version = "2.15.0", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'darwin'" },
     { name = "torch", version = "2.15.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform != 'darwin'" },
@@ -292,12 +292,10 @@ train = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.162.4" },
-    { name = "joblib", specifier = ">=1.6.0" },
     { name = "numpy", specifier = ">=2.5.4" },
     { name = "onnx", specifier = ">=1.23.2" },
     { name = "onnxruntime", specifier = ">=1.32.0" },
     { name = "runtime", specifier = ">=0.1.4" },
-    { name = "scikit-learn", specifier = ">=1.9.1" },
     { name = "uvicorn", specifier = ">=0.54.0" },
 ]
 
@@ -307,8 +305,10 @@ dev = [
     { name = "pytest", specifier = ">=9.2.0" },
 ]
 train = [
+    { name = "joblib", specifier = ">=1.6.0" },
     { name = "onnx", specifier = ">=1.23.2" },
     { name = "onnxscript", specifier = ">=0.7.2" },
+    { name = "scikit-learn", specifier = ">=1.9.1" },
     { name = "skl2onnx", specifier = ">=1.20.0" },
     { name = "torch", specifier = ">=2.15.0", index = "https://download.pytorch.org/whl/cpu" },
 ]
