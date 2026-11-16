@@ -1,0 +1,15 @@
+[package]
+name = "eta-rust"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+axum = { version = "0.8.9", default-features = false, features = ["http1", "tokio"] }
+tokio = { version = "1.54", features = ["rt-multi-thread", "macros", "net", "signal"] }
+serde_json = { version = "1.0.154", features = ["arbitrary_precision", "preserve_order"] }
+ort = { version = "=2.0.0-rc.14", default-features = false, features = ["load-dynamic"] }
+
+[profile.release]
+strip = true
+lto = true
