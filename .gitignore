@@ -1,4 +1,7 @@
 __pycache__
 .venv
 artifacts/
+node_modules
+*.sqlite*
+artifacts
 
